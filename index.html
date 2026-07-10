@@ -285,7 +285,7 @@ form.rsvp{ width:min(400px,88%); display:flex; flex-direction:column; gap:16px; 
   background-size:20px 20px;
 }
 .plane-wipe.active{
-  animation: wipe-across 6s cubic-bezier(.5,0,.5,1) forwards;
+  animation: wipe-across 10s cubic-bezier(.5,0,.5,1) forwards;
 }
 .wipe-plane{
   position:absolute; top:50%; right:8%; width:64px; height:64px; color:var(--burgundy);
@@ -606,6 +606,29 @@ const GUESTS = [
       .trim();
   }
 
+  // ── Recherche approximative (tolère les petites fautes) ──────────────
+  function levenshtein(a, b){
+    const m = a.length, n = b.length;
+    const dp = [];
+    for(let i=0;i<=m;i++){
+      dp[i] = [];
+      for(let j=0;j<=n;j++){
+        dp[i][j] = i===0 ? j : j===0 ? i : 0;
+      }
+    }
+    for(let i=1;i<=m;i++)
+      for(let j=1;j<=n;j++)
+        dp[i][j] = a[i-1]===b[j-1] ? dp[i-1][j-1] : 1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+    return dp[m][n];
+  }
+
+  function fuzzyMatch(a, b){
+    if(a === b) return true;
+    const maxLen = Math.max(a.length, b.length);
+    const maxDist = maxLen <= 4 ? 0 : maxLen <= 7 ? 1 : 2;
+    return levenshtein(a, b) <= maxDist;
+  }
+
   // ── Références DOM ────────────────────────────────────────────────────
   const form           = document.getElementById("rsvpForm");
   const firstInput     = document.getElementById("firstName");
@@ -633,13 +656,13 @@ const GUESTS = [
     }
 
     const guest = GUESTS.find(function(g){
-      const mainMatch = normalize(g.firstName) === typedFirst && normalize(g.lastName || "") === typedLast;
+      const mainMatch = fuzzyMatch(normalize(g.firstName), typedFirst) && fuzzyMatch(normalize(g.lastName || ""), typedLast);
       if(mainMatch) return true;
       if(Array.isArray(g.aliases)){
         return g.aliases.some(function(a){
           const aFirst = normalize(a.firstName != null ? a.firstName : g.firstName);
           const aLast  = normalize(a.lastName  != null ? a.lastName  : g.lastName || "");
-          return aFirst === typedFirst && aLast === typedLast;
+          return fuzzyMatch(aFirst, typedFirst) && fuzzyMatch(aLast, typedLast);
         });
       }
       return false;
@@ -674,11 +697,11 @@ const GUESTS = [
       void planeWipe.offsetWidth;
       planeWipe.classList.add("active");
       window.scrollTo({ top:0 });
-      setTimeout(showTicket, 2860);
+      setTimeout(showTicket, 4800);
       setTimeout(function(){
         planeWipe.classList.remove("active");
         planeWipe.hidden = true;
-      }, 6050);
+      }, 10100);
     }
   });
 
