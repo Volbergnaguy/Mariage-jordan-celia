@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jordan & Célia — Embarquement immédiat</title>
+<meta name="description" content="Jordan & Célia se marient le 1er août 2026. Entrez votre prénom pour découvrir votre destination.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:        #f6f2f2;
+  --cream-deep:   #f6f6f6;
+  --paper:        #ffffff;
+  --outer:        #f2f2f2;
+  --burgundy:     #c8102e;
+  --burgundy-dk:  #8e0a1f;
+  --burgundy-lt:  #e2173a;
+  --gold:         #b98d4a;
+  --gold-lt:      #d9b877;
+  --ink:          #2a2a2a;
+  --ink-soft:     #6e6e6e;
+  --green:        #4b5d3a;
+  --shadow:       0 20px 44px -14px rgba(142,10,31,.32);
+  --radius-lg:    30px;
+  --radius-md:    18px;
+  --serif:        'Playfair Display', Georgia, serif;
+  --script:       'Alex Brush', 'Brush Script MT', cursive;
+  --body:         'Cormorant Garamond', Georgia, serif;
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0; font-family:var(--body); color:var(--ink);
+  background:var(--outer); -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{ font-family:var(--serif); margin:0; }
+p{ margin:0; }
+button{ font-family:inherit; }
+svg.ico{ width:1em; height:1em; fill:currentColor; display:inline-block; vertical-align:-.12em; }
+.visually-hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+
+.page{
+  position:relative; max-width:780px; margin:0 auto;
+  background:var(--cream); overflow:hidden;
+  box-shadow:0 0 60px rgba(142,10,31,.15);
+}
+.page::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image: radial-gradient(rgba(200,16,46,.09) 1.3px, transparent 1.3px);
+  background-size:20px 20px;
+  opacity:.6;
+}
+.continents{ position:absolute; inset:0; z-index:0; width:100%; height:100%; opacity:.5; pointer-events:none; }
+.continents path{ fill:rgba(0,0,0,.12); }
+
+.roses{ position:absolute; top:-14px; left:-18px; width:200px; z-index:2; filter:drop-shadow(0 10px 12px rgba(142,10,31,.22)); pointer-events:none; }
+.stamp{ position:absolute; z-index:2; opacity:.4; color:var(--burgundy); pointer-events:none; }
+.stamp text{ font-family:var(--serif); fill:var(--burgundy); }
+.stamp-love{ top:38%; left:1%; width:110px; transform:rotate(-9deg); }
+.stamp-together{ top:30%; right:1%; width:118px; transform:rotate(7deg); }
+.heart-route{ position:absolute; top:1.5%; right:5%; width:190px; z-index:2; pointer-events:none; }
+.petal{ position:absolute; z-index:2; pointer-events:none; }
+.petal svg{ display:block; }
+
+@media (max-width:640px){
+  .roses{ width:130px; }
+  .heart-route{ width:130px; }
+  .stamp-love,.stamp-together{ width:86px; }
+}
+
+.screen{ position:relative; z-index:1; }
+.screen[hidden]{ display:none; }
+
+/* HERO */
+.hero{
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  padding:56px 24px 30px; position:relative; overflow:visible;
+}
+.monogram{
+  width:150px; height:145px;
+  display:flex; align-items:center; justify-content:center;
+  position:relative; margin-bottom:14px;
+}
+.monogram .monogram-heart-svg{
+  position:absolute; inset:0; width:100%; height:100%; overflow:visible;
+}
+.monogram .monogram-heart-svg path{
+  fill:none; stroke:var(--gold); stroke-width:.55; stroke-dasharray:1.3 1.1; stroke-linecap:round;
+}
+.monogram .letters{
+  font-family:var(--serif); font-weight:700; font-size:1.65rem; color:var(--gold); letter-spacing:2px;
+  position:relative; margin-top:6px;
+}
+.monogram .mini-plane{
+  position:absolute; top:20px; right:16px; width:20px; height:20px; color:var(--gold);
+  transform:rotate(38deg);
+}
+
+.hero h1{
+  font-family:var(--script); color:var(--burgundy-dk); font-weight:400;
+  font-size:clamp(3.4rem, 13vw, 5.4rem); line-height:1; margin:2px 0 8px;
+}
+.amp{ margin:0 .12em; display:inline-block; }
+.divider{ display:flex; align-items:center; gap:10px; color:var(--gold); width:min(230px,60%); margin:6px 0 14px; }
+.divider::before,.divider::after{ content:""; flex:1; height:1px; background:var(--gold); opacity:.7; }
+.divider svg{ width:12px; height:12px; }
+
+.date-line{
+  font-family:var(--serif); font-weight:700; letter-spacing:4px; color:var(--burgundy);
+  font-size:.92rem; margin-bottom:20px; display:flex; align-items:center; gap:10px;
+}
+.date-line .dot{ color:var(--gold); font-size:.7rem; }
+
+.welcome-title{
+  font-family:var(--serif); font-weight:700; letter-spacing:3px; color:var(--burgundy-dk);
+  font-size:clamp(1.15rem,3.6vw,1.55rem); text-transform:uppercase;
+}
+.welcome-sub{
+  font-family:var(--serif); font-weight:500; letter-spacing:2.5px; color:var(--ink-soft);
+  font-size:.78rem; text-transform:uppercase; margin-top:5px;
+}
+.form-intro{ margin:24px 0 14px; font-style:italic; color:var(--ink-soft); font-size:1.05rem; }
+
+form.rsvp{ width:min(400px,88%); display:flex; flex-direction:column; gap:16px; align-items:center; }
+.field{
+  width:100%; display:flex; align-items:center; background:var(--paper);
+  border:1px solid var(--gold-lt); border-radius:999px; padding:13px 20px;
+  box-shadow:0 6px 16px -10px rgba(142,10,31,.3);
+}
+.field svg{ width:18px; height:18px; color:var(--gold); margin-right:10px; flex:none; }
+.field input{ flex:1; min-width:0; border:none; outline:none; background:transparent; font-family:var(--body); font-style:italic; font-size:1.12rem; color:var(--ink); }
+.field input::placeholder{ color:#b7a488; }
+
+.btn-embark{
+  width:100%; border:1.5px solid var(--gold-lt); border-radius:999px;
+  background:linear-gradient(180deg,var(--burgundy-lt),var(--burgundy-dk));
+  color:var(--cream-deep); font-family:var(--serif); font-weight:700; letter-spacing:3px;
+  text-transform:uppercase; font-size:.9rem; padding:15px 24px; cursor:pointer;
+  box-shadow:var(--shadow); display:flex; align-items:center; justify-content:center; gap:10px;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.btn-embark svg{ width:16px; height:16px; }
+.btn-embark:hover{ transform:translateY(-2px); box-shadow:0 24px 42px -16px rgba(142,10,31,.45); }
+.btn-embark:focus-visible,.field input:focus-visible,a:focus-visible,.btn-back:focus-visible{ outline:2px solid var(--burgundy); outline-offset:3px; }
+
+.error-msg{ color:var(--burgundy); font-size:.92rem; font-style:italic; min-height:1.3em; }
+
+.scroll-cue{ margin-top:22px; color:var(--gold); width:20px; height:20px; animation:bob 2.2s ease-in-out infinite; }
+@keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(7px);} }
+
+/* TICKET */
+.ticket-wrap{ padding:0 20px 46px; }
+.ticket{
+  width:100%; margin:0 auto; display:grid; grid-template-columns: .85fr 2px 2fr 1.35fr;
+  background:var(--paper); border-radius:var(--radius-lg); overflow:hidden;
+  box-shadow:var(--shadow); position:relative;
+}
+.ticket-stub{
+  position:relative; background:linear-gradient(165deg,var(--burgundy-lt),var(--burgundy-dk));
+  color:var(--cream); padding:22px 10px 18px; display:flex; flex-direction:column;
+  align-items:center; justify-content:space-between; text-align:center; overflow:hidden;
+}
+.ticket-stub .stub-map{ position:absolute; inset:0; opacity:.14; }
+.ticket-stub .label{
+  font-family:var(--serif); font-weight:700; letter-spacing:1.6px; font-size:.78rem;
+  text-transform:uppercase; display:flex; flex-direction:column; gap:6px; align-items:center; position:relative;
+}
+.ticket-stub .label .heart{ color:var(--gold-lt); width:12px; height:12px; }
+.ticket-stub .tagline{
+  font-family:var(--script); font-size:1.4rem; line-height:1.1; color:var(--gold-lt); position:relative;
+}
+
+.ticket-divider{ position:relative; width:2px; border-left:2px dashed rgba(142,10,31,.3); overflow:visible; }
+.ticket-divider::before,.ticket-divider::after{
+  content:""; position:absolute; left:-11px; width:22px; height:22px; border-radius:50%;
+  background:var(--cream); z-index:3;
+}
+.ticket-divider::before{ top:-11px; }
+.ticket-divider::after{ bottom:-11px; }
+
+.ticket-main{ position:relative; padding:26px 24px; display:flex; flex-direction:column; gap:14px; justify-content:center; overflow:hidden; }
+.ticket-main .palm{ position:absolute; bottom:-10px; right:-6px; width:110px; opacity:.18; color:var(--burgundy); }
+.tk-label{ font-family:var(--serif); font-weight:700; letter-spacing:1.8px; font-size:.7rem; text-transform:uppercase; color:var(--gold); position:relative; z-index:1; }
+.tk-name{ font-family:var(--serif); font-weight:700; font-size:clamp(1.4rem,4vw,1.85rem); color:var(--burgundy-dk); text-transform:uppercase; position:relative; z-index:1; }
+.tk-sep{ border-top:1.5px dashed var(--gold-lt); position:relative; z-index:1; }
+.tk-dest-row{ display:flex; align-items:center; gap:10px; position:relative; z-index:1; }
+.tk-flag{ width:34px; height:24px; border-radius:3px; overflow:hidden; box-shadow:0 0 0 1px rgba(0,0,0,.08); flex:none; }
+.tk-flag img{ width:100%; height:100%; object-fit:cover; display:block; }
+.tk-dest-name{ font-family:var(--serif); font-weight:700; font-size:clamp(1.5rem,4.4vw,2.1rem); color:var(--burgundy-dk); }
+.tk-dest-sub{ font-family:var(--script); font-size:1.3rem; color:var(--ink-soft); margin-top:-6px; position:relative; z-index:1; }
+.tk-wish{ font-style:italic; color:var(--ink-soft); font-size:1rem; line-height:1.4; text-align:center; position:relative; z-index:1; }
+.tk-sign{ font-family:var(--script); font-size:1.7rem; color:var(--burgundy-dk); text-align:center; display:flex; align-items:center; justify-content:center; gap:8px; position:relative; z-index:1; }
+.tk-sign svg{ width:14px; height:14px; color:var(--burgundy); }
+
+.ticket-details{ background:var(--paper); padding:22px 20px; display:flex; flex-direction:column; gap:13px; border-left:2px dashed rgba(142,10,31,.3); position:relative; }
+.tk-row{ display:flex; justify-content:space-between; align-items:flex-start; }
+.tk-info .k{ display:flex; align-items:center; gap:6px; font-family:var(--serif); font-weight:700; font-size:.65rem; letter-spacing:1.4px; text-transform:uppercase; color:var(--ink-soft); }
+.tk-info .k svg{ width:13px; height:13px; color:var(--burgundy); }
+.tk-info .v{ font-family:var(--serif); font-weight:700; color:var(--burgundy-dk); font-size:.98rem; margin-top:3px; }
+.tk-plane-mark{ width:22px; height:22px; color:var(--burgundy); }
+.tk-two-col{ display:flex; gap:16px; }
+.tk-table-box{ border:1.5px dashed var(--gold); border-radius:12px; padding:10px 12px; text-align:center; background:rgba(185,141,74,.08); }
+.tk-table-box .k{ justify-content:center; font-family:var(--serif); font-weight:700; letter-spacing:1.8px; font-size:.65rem; text-transform:uppercase; color:var(--burgundy); }
+.tk-table-box .num{ font-family:var(--serif); font-weight:700; font-size:1.7rem; color:var(--burgundy-dk); }
+.tk-table-box .dest{ font-family:var(--script); font-size:1.1rem; color:var(--ink-soft); }
+.barcode{ height:32px; margin-top:auto; opacity:.85;
+  background:repeating-linear-gradient(90deg,#2c1a12 0 1px, transparent 1px 3px, #2c1a12 4px 5px, transparent 5px 6px, #2c1a12 7px 9px, transparent 9px 11px, #2c1a12 12px 13px, transparent 13px 15px);
+}
+
+@media (max-width:660px){
+  .ticket{ grid-template-columns:1fr; }
+  .ticket-stub{ flex-direction:row; justify-content:space-between; padding:16px 20px; }
+  .ticket-divider{ border-left:none; border-top:2px dashed rgba(142,10,31,.3); }
+  .ticket-divider::before,.ticket-divider::after{ top:-11px; left:auto; }
+  .ticket-divider::before{ left:-11px; }
+  .ticket-divider::after{ right:-11px; left:auto; }
+  .ticket-details{ border-left:none; border-top:2px dashed rgba(142,10,31,.3); }
+}
+
+/* HOW IT WORKS */
+.how-wrap{ padding:0 20px 44px; }
+.how{
+  border:1.5px solid var(--gold-lt); border-radius:22px; padding:26px 24px;
+  display:flex; flex-direction:column; align-items:center; gap:26px; background:rgba(255,250,241,.4);
+}
+.how-title{ font-family:var(--serif); font-weight:700; letter-spacing:2px; color:var(--burgundy-dk); text-transform:uppercase; font-size:1rem; display:flex; align-items:center; gap:10px; }
+.how-title svg{ width:13px; height:13px; color:var(--gold); }
+.how-body{ width:100%; display:flex; flex-wrap:wrap; gap:26px; align-items:stretch; justify-content:center; }
+.steps{ display:flex; flex:1 1 460px; gap:16px; flex-wrap:wrap; justify-content:center; }
+.step{ width:140px; text-align:center; }
+.step .phone{
+  width:64px; height:108px; margin:0 auto 12px; border-radius:12px; border:2px solid var(--burgundy);
+  background:var(--paper); display:flex; align-items:center; justify-content:center; position:relative;
+  box-shadow:0 8px 16px -8px rgba(142,10,31,.3);
+}
+.step .phone svg{ width:26px; height:26px; color:var(--burgundy); }
+.step .num{
+  position:absolute; top:-10px; left:50%; transform:translateX(-50%); width:22px; height:22px;
+  border-radius:50%; background:var(--burgundy); color:var(--cream); font-family:var(--serif);
+  font-weight:700; font-size:.75rem; display:flex; align-items:center; justify-content:center; z-index:2;
+}
+.step h3{ font-family:var(--serif); font-weight:700; font-size:.9rem; color:var(--burgundy-dk); margin-bottom:5px; }
+.step p{ font-size:.88rem; color:var(--ink-soft); line-height:1.35; }
+
+.qr-card{
+  flex:0 0 200px; background:var(--burgundy); border:1.5px solid var(--gold); border-radius:var(--radius-md);
+  padding:16px; text-align:center; color:var(--cream); box-shadow:var(--shadow);
+  display:flex; flex-direction:column; align-items:center; gap:9px;
+}
+.qr-card .tag{ font-family:var(--serif); font-weight:700; letter-spacing:2px; font-size:.8rem; }
+.qr-box{ background:var(--paper); padding:9px; border-radius:8px; }
+#qrcode{ width:112px; height:112px; }
+.qr-card .caption{ font-size:.78rem; letter-spacing:.6px; line-height:1.3; }
+.qr-card .caption svg{ width:11px; height:11px; color:var(--gold-lt); }
+
+/* FOOTER */
+.footer-bar{
+  position:relative; z-index:1; background:var(--burgundy-dk); color:var(--gold-lt); text-align:center;
+  font-family:var(--script); font-size:1.35rem; padding:16px 20px; display:flex; align-items:center; justify-content:center; gap:10px;
+}
+.footer-bar svg{ width:15px; height:15px; flex:none; }
+
+/* TICKET RESULT SCREEN */
+.ticket-screen{ padding-top:40px; display:flex; flex-direction:column; align-items:center; gap:22px; }
+.ticket-screen .lead{ text-align:center; }
+.ticket-screen .lead .kicker{ font-family:var(--serif); letter-spacing:3px; text-transform:uppercase; color:var(--gold); font-size:.76rem; display:flex; align-items:center; gap:8px; justify-content:center; }
+.ticket-screen .lead .kicker svg{ width:13px; height:13px; }
+.ticket-screen .lead h2{ font-family:var(--script); color:var(--burgundy-dk); font-size:clamp(2.2rem,7vw,2.8rem); margin-top:2px; }
+.btn-back{ background:none; border:none; color:var(--burgundy); font-family:var(--body); font-style:italic; font-size:1rem; cursor:pointer; text-decoration:underline; padding:6px 10px; margin-bottom:26px; }
+
+/* PLANE WIPE TRANSITION */
+.plane-wipe{
+  position:fixed; inset:0; z-index:9999;
+  background:var(--cream);
+  transform:translateX(-115%);
+  pointer-events:none;
+  display:flex; align-items:center;
+  overflow:hidden;
+}
+.plane-wipe::before{
+  content:""; position:absolute; inset:0;
+  background-image: radial-gradient(rgba(200,16,46,.08) 1.2px, transparent 1.2px);
+  background-size:20px 20px;
+}
+.plane-wipe.active{
+  animation: wipe-across 6s cubic-bezier(.5,0,.5,1) forwards;
+}
+.wipe-plane{
+  position:absolute; top:50%; right:8%; width:64px; height:64px; color:var(--burgundy);
+  transform:translateY(-50%) rotate(90deg);
+  filter: drop-shadow(-10px 4px 8px rgba(74,14,24,.25));
+}
+.wipe-trail{
+  position:absolute; top:50%; right:calc(8% + 58px); width:38%; height:2px;
+  background:repeating-linear-gradient(90deg, var(--gold) 0 10px, transparent 10px 20px);
+  transform:translateY(-50%); opacity:.85;
+}
+.wipe-text{
+  position:absolute; left:50%; top:calc(50% + 60px); transform:translateX(-50%);
+  font-family:var(--serif); font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  color:var(--burgundy-dk); font-size:.85rem; white-space:nowrap;
+}
+@keyframes wipe-across{
+  0%{ transform:translateX(-115%); }
+  100%{ transform:translateX(115%); }
+}
+
+.ticket-screen.reveal .lead,
+.ticket-screen.reveal #ticket,
+.ticket-screen.reveal .btn-back{
+  animation: ticket-pop .6s cubic-bezier(.2,.8,.3,1.15) both;
+}
+.ticket-screen.reveal #ticket{ animation-delay:.05s; }
+.ticket-screen.reveal .btn-back{ animation-delay:.15s; }
+@keyframes ticket-pop{
+  0%{ opacity:0; transform:translateY(14px) scale(.97); }
+  100%{ opacity:1; transform:translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  .scroll-cue{ animation:none; }
+  .plane-wipe{ display:none !important; }
+  .ticket-screen.reveal .lead, .ticket-screen.reveal #ticket, .ticket-screen.reveal .btn-back{ animation:none !important; opacity:1; transform:none; }
+}
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="ic-plane" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-3 2v1.5l4.5-1 4.5 1V21l-3-2v-5.5l8-2.5z"/></symbol>
+  <symbol id="ic-person" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></symbol>
+  <symbol id="ic-phone" viewBox="0 0 24 24"><path d="M16.5 1h-9A2.5 2.5 0 0 0 5 3.5v17A2.5 2.5 0 0 0 7.5 23h9a2.5 2.5 0 0 0 2.5-2.5v-17A2.5 2.5 0 0 0 16.5 1zM12 21.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM17 18H7V4h10v14z"/></symbol>
+  <symbol id="ic-ticket" viewBox="0 0 24 24"><path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1.2a1.5 1.5 0 0 0 0 2.9V13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-.9a1.5 1.5 0 0 0 0-2.9V8zm5 .5v6M9 8.5a.75.75 0 0 1 1.5 0m-1.5 6a.75.75 0 0 0 1.5 0" stroke="currentColor" stroke-width="1" fill="none"/></symbol>
+  <symbol id="ic-heart" viewBox="0 0 24 24"><path d="M12 21s-6.7-4.35-9.3-8.1C1.1 10.7 1.5 7.9 3.6 6.3 5.4 5 7.8 5.4 9.2 7l2.8 3 2.8-3c1.4-1.6 3.8-2 5.6-.7 2.1 1.6 2.5 4.4.9 6.6C18.7 16.65 12 21 12 21z"/></symbol>
+  <symbol id="ic-calendar" viewBox="0 0 24 24"><path d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm12 6H5v12h14V8z"/></symbol>
+  <symbol id="ic-case" viewBox="0 0 24 24"><path d="M9 2a2 2 0 0 0-2 2v1H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3V4a2 2 0 0 0-2-2H9zm0 3V4h6v1H9zM4 8h16v9H4V8z"/></symbol>
+  <symbol id="ic-door" viewBox="0 0 24 24"><path d="M6 2v20h4V2H6zm7 0v20h5V2h-5zm-3.5 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></symbol>
+  <symbol id="ic-seat" viewBox="0 0 24 24"><path d="M7 3h10v8H7V3zm-1 9h12v2a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-2zm3 6h2v4H9v-4zm4 0h2v4h-2v-4z"/></symbol>
+  <symbol id="ic-palm" viewBox="0 0 100 100"><path d="M50 95 C48 65 52 45 58 25" stroke="currentColor" stroke-width="3" fill="none"/><path d="M58 25 C40 15 25 18 15 30 C30 28 42 30 52 38 C50 22 58 10 72 6 C64 18 60 30 58 38 C68 22 82 22 92 32 C78 30 66 34 58 42 C56 28 60 16 58 25Z" fill="currentColor"/></symbol>
+  <symbol id="ic-world" viewBox="0 0 200 200"><path d="M20,60 q40,-30 90,-10 q45,18 60,0 q20,-20 30,15 q10,35 -25,45 q-40,15 -75,-5 q-45,-25 -80,-10 q-20,10 0,-35z"/><path d="M40,120 q50,-15 90,10 q35,20 20,45 q-20,25 -70,10 q-45,-15 -55,-40 q-8,-20 15,-25z"/></symbol>
+</svg>
+
+<div class="page">
+  <div class="continents" aria-hidden="true">
+    <svg viewBox="0 0 800 1400" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+      <path d="M80,120 q80,-50 180,-15 q55,25 115,10 q90,-20 115,35 q25,55 -30,85 q-65,35 -140,10 q-90,-30 -155,15 q-65,45 -115,-15 q-45,-55 30,-125z"/>
+      <path d="M420,90 q110,-35 210,25 q75,50 45,110 q-30,65 -125,50 q-90,-15 -135,-75 q-45,-65 5,-110z"/>
+      <path d="M540,420 q100,-25 190,35 q85,60 35,135 q-55,80 -160,55 q-110,-25 -125,-110 q-10,-75 60,-115z"/>
+      <path d="M150,540 q90,-20 150,35 q55,50 15,115 q-50,75 -150,55 q-95,-20 -105,-100 q-10,-70 90,-105z"/>
+      <path d="M480,820 q95,-20 175,40 q70,55 25,120 q-50,70 -150,50 q-95,-20 -110,-95 q-10,-70 60,-115z"/>
+      <path d="M100,900 q85,-25 155,30 q60,50 20,110 q-45,65 -140,45 q-90,-20 -100,-90 q-8,-65 65,-95z"/>
+      <path d="M420,1150 q100,-25 185,35 q75,55 30,120 q-50,75 -155,55 q-100,-20 -115,-100 q-10,-70 55,-110z"/>
+    </svg>
+  </div>
+
+  <svg class="roses" viewBox="0 0 220 210" aria-hidden="true">
+    <g transform="rotate(-14 110 105)">
+      <path d="M18,195 Q55,150 42,95" stroke="#4b5d3a" stroke-width="4" fill="none"/>
+      <path d="M42,170 Q28,155 8,158" stroke="#4b5d3a" stroke-width="3.5" fill="none"/>
+      <ellipse cx="26" cy="158" rx="15" ry="7" fill="#5c7047" transform="rotate(-25 26 158)"/>
+      <ellipse cx="95" cy="88" rx="18" ry="8" fill="#4b5d3a" transform="rotate(35 95 88)"/>
+      <g transform="translate(58,58)">
+        <circle r="32" fill="#7a0a1c"/>
+        <path d="M0,-26 C16,-24 26,-12 24,2 C22,16 8,26 -6,24 C-18,22 -26,10 -22,-4 C-19,-16 -10,-26 0,-26Z" fill="#c8102e"/>
+        <path d="M0,-16 C10,-15 16,-7 14,2 C12,11 4,16 -4,15 C-11,13 -16,6 -13,-2 C-11,-10 -6,-16 0,-16Z" fill="#d81b3f"/>
+        <path d="M0,-8 C6,-7 9,-3 8,2 C7,7 2,9 -3,8 C-7,6 -9,2 -7,-3 C-6,-7 -3,-8 0,-8Z" fill="#e8395a"/>
+      </g>
+      <g transform="translate(112,32) scale(0.72)">
+        <circle r="32" fill="#7a0a1c"/>
+        <path d="M0,-26 C16,-24 26,-12 24,2 C22,16 8,26 -6,24 C-18,22 -26,10 -22,-4 C-19,-16 -10,-26 0,-26Z" fill="#c8102e"/>
+        <path d="M0,-16 C10,-15 16,-7 14,2 C12,11 4,16 -4,15 C-11,13 -16,6 -13,-2 C-11,-10 -6,-16 0,-16Z" fill="#d81b3f"/>
+      </g>
+      <g transform="translate(24,52) scale(0.5)">
+        <circle r="32" fill="#7a0a1c"/>
+        <path d="M0,-26 C16,-24 26,-12 24,2 C22,16 8,26 -6,24 C-18,22 -26,10 -22,-4 C-19,-16 -10,-26 0,-26Z" fill="#d81b3f"/>
+      </g>
+      <ellipse cx="140" cy="60" rx="14" ry="6" fill="#5c7047" transform="rotate(60 140 60)"/>
+      <ellipse cx="10" cy="110" rx="15" ry="6.5" fill="#4b5d3a" transform="rotate(-55 10 110)"/>
+    </g>
+  </svg>
+
+  <svg class="heart-route" viewBox="0 0 220 150" aria-hidden="true">
+    <path d="M45,55 C45,28 82,18 100,42 C118,18 155,28 155,55 C155,84 118,102 100,122 C82,102 45,84 45,55 Z"
+      fill="none" stroke="var(--gold)" stroke-width="1.3" stroke-dasharray="4 5" opacity=".85"/>
+    <use href="#ic-plane" x="150" y="18" width="22" height="22" transform="rotate(40 161 29)" fill="var(--gold)"/>
+  </svg>
+
+  <div class="petal" style="top:6%; left:5%; width:24px; transform:rotate(20deg);"><svg viewBox="0 0 24 16"><path d="M12,0 C20,2 24,8 12,16 C0,8 4,2 12,0Z" fill="#c8102e"/></svg></div>
+  <div class="petal" style="top:18%; left:2%; width:16px; transform:rotate(-35deg);"><svg viewBox="0 0 24 16"><path d="M12,0 C20,2 24,8 12,16 C0,8 4,2 12,0Z" fill="#d81b3f"/></svg></div>
+  <div class="petal" style="top:34%; right:3%; width:20px; transform:rotate(65deg);"><svg viewBox="0 0 24 16"><path d="M12,0 C20,2 24,8 12,16 C0,8 4,2 12,0Z" fill="#e8395a"/></svg></div>
+  <div class="petal" style="top:47%; left:1%; width:22px; transform:rotate(12deg);"><svg viewBox="0 0 24 16"><path d="M12,0 C20,2 24,8 12,16 C0,8 4,2 12,0Z" fill="#c8102e"/></svg></div>
+  <div class="petal" style="top:51%; right:4%; width:16px; transform:rotate(-20deg);"><svg viewBox="0 0 24 16"><path d="M12,0 C20,2 24,8 12,16 C0,8 4,2 12,0Z" fill="#7a0a1c"/></svg></div>
+  <div class="petal" style="top:63%; right:1.5%; width:20px; transform:rotate(40deg);"><svg viewBox="0 0 24 16"><path d="M12,0 C20,2 24,8 12,16 C0,8 4,2 12,0Z" fill="#b98d4a"/></svg></div>
+  <div class="petal" style="top:70%; left:3%; width:18px; transform:rotate(-15deg);"><svg viewBox="0 0 24 16"><path d="M12,0 C20,2 24,8 12,16 C0,8 4,2 12,0Z" fill="#c8102e"/></svg></div>
+  <div class="petal" style="top:80%; right:2%; width:22px; transform:rotate(25deg);"><svg viewBox="0 0 24 16"><path d="M12,0 C20,2 24,8 12,16 C0,8 4,2 12,0Z" fill="#d81b3f"/></svg></div>
+
+  <div class="app">
+    <section id="screen-welcome" class="screen">
+      <div class="hero">
+        <svg class="stamp stamp-love" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 3"/>
+          <path id="loveCircle" d="M50,10 a40,40 0 1,1 -0.1,0" fill="none"/>
+          <text font-size="7.4" letter-spacing="1"><textPath href="#loveCircle" startOffset="1%">LOVE IS OUR GREATEST ADVENTURE •</textPath></text>
+          <use href="#ic-heart" x="44" y="42" width="12" height="12"/>
+        </svg>
+
+        <svg class="stamp stamp-together" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 3"/>
+          <path id="togCircle" d="M50,10 a40,40 0 1,1 -0.1,0" fill="none"/>
+          <text font-size="7.4" letter-spacing="1"><textPath href="#togCircle" startOffset="1%">TOGETHER • AUG 01 2026 • FOREVER •</textPath></text>
+          <use href="#ic-plane" x="42" y="42" width="16" height="16"/>
+        </svg>
+
+        <div class="monogram" aria-hidden="true">
+          <svg class="monogram-heart-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+            <path d="M12 21s-6.7-4.35-9.3-8.1C1.1 10.7 1.5 7.9 3.6 6.3 5.4 5 7.8 5.4 9.2 7l2.8 3 2.8-3c1.4-1.6 3.8-2 5.6-.7 2.1 1.6 2.5 4.4.9 6.6C18.7 16.65 12 21 12 21z"/>
+          </svg>
+          <span class="letters">JC</span>
+          <svg class="mini-plane"><use href="#ic-plane"/></svg>
+        </div>
+
+        <h1>Jordan <span class="amp">&amp;</span> Célia</h1>
+
+        <div class="divider" aria-hidden="true"><svg><use href="#ic-heart"/></svg></div>
+
+        <p class="date-line"><span class="dot">•</span> 01 AOÛT 2026 <span class="dot">•</span></p>
+
+        <p class="welcome-title">Bienvenue à bord</p>
+        <p class="welcome-sub">de notre plus beau voyage</p>
+
+        <p class="form-intro">Entrez votre prénom et votre nom pour découvrir votre destination</p>
+
+        <form class="rsvp" id="rsvpForm" novalidate>
+          <label class="visually-hidden" for="firstName">Votre prénom</label>
+          <div class="field">
+            <svg><use href="#ic-person"/></svg>
+            <input id="firstName" name="firstName" type="text" placeholder="Entrez votre prénom" autocomplete="given-name" required>
+          </div>
+          <label class="visually-hidden" for="lastName">Votre nom</label>
+          <div class="field">
+            <svg><use href="#ic-ticket"/></svg>
+            <input id="lastName" name="lastName" type="text" placeholder="Entrez votre nom de famille" autocomplete="family-name" required>
+          </div>
+          <p class="error-msg" id="errorMsg" role="alert"></p>
+          <button type="submit" class="btn-embark">
+            <svg><use href="#ic-plane"/></svg> Embarquer
+          </button>
+        </form>
+
+        <a href="#how" class="scroll-cue" aria-label="Voir comment ça marche">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <section id="screen-ticket" class="screen ticket-screen" hidden>
+      <div class="lead">
+        <p class="kicker"><svg><use href="#ic-plane"/></svg> Embarquement confirmé</p>
+        <h2>Bon voyage !</h2>
+      </div>
+    </section>
+
+    <div class="ticket-wrap">
+      <article class="ticket" id="ticket">
+        <div class="ticket-stub">
+          <svg class="stub-map" viewBox="0 0 200 200" aria-hidden="true"><use href="#ic-world"/></svg>
+          <p class="label">Boarding<br>Pass <svg class="heart"><use href="#ic-heart"/></svg></p>
+          <p class="tagline">Let the<br>adventure<br>begin</p>
+        </div>
+
+        <div class="ticket-divider"></div>
+
+        <div class="ticket-main">
+          <svg class="palm" viewBox="0 0 100 100" aria-hidden="true"><use href="#ic-palm"/></svg>
+          <div>
+            <p class="tk-label">Passager</p>
+            <p class="tk-name" id="tkName">—</p>
+          </div>
+          <div class="tk-sep"></div>
+          <div>
+            <p class="tk-label">Destination</p>
+            <div class="tk-dest-row">
+              <span class="tk-flag" id="tkFlagWrap"><img id="tkFlag" src="" alt=""></span>
+              <span class="tk-dest-name" id="tkDest">—</span>
+            </div>
+            <p class="tk-dest-sub" id="tkDestSub"></p>
+          </div>
+          <p class="tk-wish">Nous vous souhaitons un merveilleux voyage à nos côtés.</p>
+          <p class="tk-sign">Jordan <span class="amp">&amp;</span> Célia <svg><use href="#ic-heart"/></svg></p>
+        </div>
+
+        <div class="ticket-details">
+          <div class="tk-row">
+            <div class="tk-info"><p class="k"><svg><use href="#ic-calendar"/></svg> Date</p><p class="v">01 AOÛT 2026</p></div>
+            <svg class="tk-plane-mark"><use href="#ic-plane"/></svg>
+          </div>
+          <div class="tk-info"><p class="k"><svg><use href="#ic-plane"/></svg> Vol</p><p class="v" id="tkFlight">JC01082026</p></div>
+          <div class="tk-info"><p class="k"><svg><use href="#ic-case"/></svg> Classe</p><p class="v" id="tkClass">PREMIÈRE</p></div>
+          <div class="tk-two-col">
+            <div class="tk-info"><p class="k"><svg><use href="#ic-door"/></svg> Porte</p><p class="v" id="tkGate">—</p></div>
+            <div class="tk-info"><p class="k"><svg><use href="#ic-seat"/></svg> Siège</p><p class="v" id="tkSeat">—</p></div>
+          </div>
+          <div class="tk-table-box">
+            <p class="k">Votre destination</p>
+            <p class="num" id="tkDestBox">—</p>
+            <p class="dest" id="tkDestBoxSub">—</p>
+          </div>
+          <div class="barcode" aria-hidden="true"></div>
+        </div>
+      </article>
+      <div style="text-align:center;">
+        <button class="btn-back" id="btnBack" type="button" hidden>← Rechercher un autre prénom</button>
+      </div>
+    </div>
+
+    <div class="how-wrap" id="how">
+      <div class="how">
+        <p class="how-title"><svg><use href="#ic-heart"/></svg> Comment ça marche&nbsp;? <svg><use href="#ic-heart"/></svg></p>
+        <div class="how-body">
+          <div class="steps">
+            <div class="step">
+              <div class="phone"><span class="num">1</span><svg><use href="#ic-phone"/></svg></div>
+              <h3>Scannez le QR code</h3>
+              <p>Scannez le QR code affiché à l'entrée.</p>
+            </div>
+            <div class="step">
+              <div class="phone"><span class="num">2</span><svg><use href="#ic-person"/></svg></div>
+              <h3>Entrez votre prénom</h3>
+              <p>Saisissez votre prénom et nom, puis cliquez sur « Embarquer ».</p>
+            </div>
+            <div class="step">
+              <div class="phone"><span class="num">3</span><svg><use href="#ic-ticket"/></svg></div>
+              <h3>Découvrez votre destination</h3>
+              <p>Votre destination s'affichera comme sur votre billet&nbsp;!</p>
+            </div>
+          </div>
+          <div class="qr-card">
+            <p class="tag">SCANNEZ-MOI</p>
+            <div class="qr-box"><div id="qrcode"></div></div>
+            <p class="caption">ET TROUVEZ<br>VOTRE DESTINATION&nbsp;!<br><svg><use href="#ic-heart"/></svg></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer-bar">
+      <svg><use href="#ic-heart"/></svg> Le jour du mariage, vos invités scannent et découvrent leur destination&nbsp;! <svg><use href="#ic-plane"/></svg>
+    </footer>
+  </div>
+</div>
+
+<div class="plane-wipe" id="planeWipe" hidden aria-hidden="true">
+  <div class="wipe-trail"></div>
+  <svg class="wipe-plane" viewBox="0 0 24 24"><use href="#ic-plane"/></svg>
+  <p class="wipe-text">Embarquement en cours…</p>
+</div>
+
+<!-- ============================================================
+     LISTE DES INVITÉS
+     ⚠️ À REMPLACER par la vraie liste dimanche !
+     
+     Format de chaque invité :
+     { firstName: "Prénom", lastName: "Nom", country: "Pays (court)", countryFull: "Ville, Pays",
+       flag: "https://flagcdn.com/w80/XX.png",  ← XX = code pays ISO 2 lettres en minuscules
+       gate: "A01", seat: "1A", class: "PREMIÈRE" }
+     
+     Codes drapeaux courants :
+       fr = France    it = Italie    es = Espagne   gr = Grèce
+       ma = Maroc     jp = Japon     br = Brésil    us = États-Unis
+       pt = Portugal  th = Thaïlande mx = Mexique   bs = Bahamas
+     ============================================================ -->
+<script>
+const GUESTS = [
+  { firstName: "Whitney",  lastName: "Volberg",  country: "Bahamas",  countryFull: "Nassau, Bahamas",      flag: "https://flagcdn.com/w80/bs.png", gate: "A12", seat: "12A", class: "PREMIÈRE" },
+  { firstName: "Marc",     lastName: "Dupont",   country: "Grèce",    countryFull: "Santorin, Grèce",      flag: "https://flagcdn.com/w80/gr.png", gate: "B04", seat: "4C",  class: "AFFAIRES"  },
+  { firstName: "Sophie",   lastName: "Lemoine",  country: "Italie",   countryFull: "Amalfi, Italie",       flag: "https://flagcdn.com/w80/it.png", gate: "C09", seat: "9B",  class: "AFFAIRES",
+    aliases: [ { lastName: "Martin" } ] },
+  { firstName: "Julien",   lastName: "Ferreira", country: "France",   countryFull: "Provence, France",     flag: "https://flagcdn.com/w80/fr.png", gate: "A02", seat: "2A",  class: "PREMIÈRE"  },
+  { firstName: "Camille",  lastName: "Roy",      country: "Maroc",    countryFull: "Marrakech, Maroc",     flag: "https://flagcdn.com/w80/ma.png", gate: "D07", seat: "7D",  class: "ÉCONOMIQUE" }
+];
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(function(){
+  // ── QR Code (pointe vers l'URL de la page en cours) ──────────────────
+  try{
+    new QRCode(document.getElementById("qrcode"), {
+      text: window.location.href,
+      width: 112, height: 112,
+      colorDark: "#8e0a1f", colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  }catch(e){}
+
+  // ── Normalisation : ignore accents, casse, tirets, apostrophes ────────
+  function normalize(str){
+    return str
+      .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+      .toLowerCase()
+      .replace(/[-''ʼ]/g," ")
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  // ── Références DOM ────────────────────────────────────────────────────
+  const form           = document.getElementById("rsvpForm");
+  const firstInput     = document.getElementById("firstName");
+  const lastInput      = document.getElementById("lastName");
+  const errorMsg       = document.getElementById("errorMsg");
+  const screenWelcome  = document.getElementById("screen-welcome");
+  const screenTicket   = document.getElementById("screen-ticket");
+  const ticketWrap     = document.querySelector(".ticket-wrap");
+  const howWrap        = document.getElementById("how");
+  const btnBack        = document.getElementById("btnBack");
+
+  ticketWrap.hidden = true;
+
+  // ── Soumission du formulaire ──────────────────────────────────────────
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    errorMsg.textContent = "";
+
+    const typedFirst = normalize(firstInput.value);
+    const typedLast  = normalize(lastInput.value);
+
+    if(!typedFirst || !typedLast){
+      errorMsg.textContent = "Merci d'entrer votre prénom ET votre nom ✏️";
+      return;
+    }
+
+    const guest = GUESTS.find(function(g){
+      const mainMatch = normalize(g.firstName) === typedFirst && normalize(g.lastName || "") === typedLast;
+      if(mainMatch) return true;
+      if(Array.isArray(g.aliases)){
+        return g.aliases.some(function(a){
+          const aFirst = normalize(a.firstName != null ? a.firstName : g.firstName);
+          const aLast  = normalize(a.lastName  != null ? a.lastName  : g.lastName || "");
+          return aFirst === typedFirst && aLast === typedLast;
+        });
+      }
+      return false;
+    });
+
+    if(!guest){
+      errorMsg.textContent = "Prénom / nom introuvables 💌 Vérifiez l'orthographe ou demandez à Jordan & Célia.";
+      return;
+    }
+
+    fillTicket(guest);
+
+    const planeWipe = document.getElementById("planeWipe");
+    const reduced   = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const showTicket = function(){
+      screenWelcome.hidden = true;
+      howWrap.hidden       = true;
+      screenTicket.hidden  = false;
+      ticketWrap.hidden    = false;
+      btnBack.hidden       = false;
+      screenTicket.classList.remove("reveal");
+      void screenTicket.offsetWidth;
+      screenTicket.classList.add("reveal");
+      window.scrollTo({ top:0 });
+    };
+
+    if(reduced){
+      showTicket();
+    } else {
+      planeWipe.hidden = false;
+      void planeWipe.offsetWidth;
+      planeWipe.classList.add("active");
+      window.scrollTo({ top:0 });
+      setTimeout(showTicket, 2860);
+      setTimeout(function(){
+        planeWipe.classList.remove("active");
+        planeWipe.hidden = true;
+      }, 6050);
+    }
+  });
+
+  // ── Retour à l'accueil ────────────────────────────────────────────────
+  btnBack.addEventListener("click", function(){
+    screenTicket.hidden = true;
+    ticketWrap.hidden   = true;
+    btnBack.hidden      = true;
+    howWrap.hidden      = false;
+    screenWelcome.hidden = false;
+    firstInput.value = "";
+    lastInput.value  = "";
+    errorMsg.textContent = "";
+    firstInput.focus();
+  });
+
+  // ── Remplissage du billet ─────────────────────────────────────────────
+  function fillTicket(guest){
+    const displayName = (guest.lastName ? guest.lastName + " " + guest.firstName : guest.firstName).toUpperCase();
+    document.getElementById("tkName").textContent      = displayName;
+    document.getElementById("tkFlag").src              = guest.flag || "";
+    document.getElementById("tkFlag").alt              = guest.country || "";
+    document.getElementById("tkDest").textContent      = (guest.country || "").toUpperCase();
+    document.getElementById("tkDestSub").textContent   = guest.countryFull || "";
+    document.getElementById("tkClass").textContent     = guest.class || "PREMIÈRE";
+    document.getElementById("tkGate").textContent      = guest.gate || "—";
+    document.getElementById("tkSeat").textContent      = guest.seat || "—";
+    document.getElementById("tkDestBox").textContent   = (guest.country || "").toUpperCase();
+    document.getElementById("tkDestBoxSub").textContent = guest.countryFull || "";
+    document.getElementById("tkFlight").textContent    = "JC01082026";
+  }
+})();
+</script>
+</body>
+</html>
